@@ -11,7 +11,8 @@ const ProgressBar = (props) => {
     indeterminateDuration,
     onCompletion,
     backgroundColor,
-    trackColor = "#A6A6A6"
+    trackColor = "#A6A6A6",
+    borderRadius,
   } = props;
 
   const [timer] = useState(new Animated.Value(0));
@@ -21,7 +22,7 @@ const ProgressBar = (props) => {
     duration: indeterminateDuration,
     toValue: 1,
     useNativeDriver: true,
-    isInteraction: false
+    isInteraction: false,
   });
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const ProgressBar = (props) => {
     progress,
     progressDuration,
     timer,
-    width
+    width,
   ]);
 
   const stopAnimation = useCallback(() => {
@@ -63,7 +64,7 @@ const ProgressBar = (props) => {
       duration: 200,
       toValue: 0,
       useNativeDriver: true,
-      isInteraction: false
+      isInteraction: false,
     }).start();
   }, [indeterminateAnimation, width]);
 
@@ -74,22 +75,22 @@ const ProgressBar = (props) => {
             {
               translateX: timer.interpolate({
                 inputRange: [0, 0.5, 1],
-                outputRange: [-0.6 * 320, -0.5 * 0.8 * 320, 0.7 * 320]
-              })
+                outputRange: [-0.6 * 320, -0.5 * 0.8 * 320, 0.7 * 320],
+              }),
             },
             {
               scaleX: timer.interpolate({
                 inputRange: [0, 0.5, 1],
-                outputRange: [0.0001, 0.8, 0.0001]
-              })
-            }
-          ]
+                outputRange: [0.0001, 0.8, 0.0001],
+              }),
+            },
+          ],
         }
       : {
           width: width.interpolate({
             inputRange: [0, 100],
-            outputRange: ["0%", "100%"]
-          })
+            outputRange: ["0%", "100%"],
+          }),
         };
   };
 
@@ -98,12 +99,12 @@ const ProgressBar = (props) => {
       width: "100%",
       height,
       overflow: "hidden",
-      borderRadius: 4
+      borderRadius,
     },
     progressBar: {
       flex: 1,
-      borderRadius: height / 2
-    }
+      borderRadius,
+    },
   });
 
   return (
@@ -116,8 +117,8 @@ const ProgressBar = (props) => {
             styles.progressBar,
             {
               backgroundColor,
-              ...styleAnimation()
-            }
+              ...styleAnimation(),
+            },
           ]}
         />
       </Animated.View>
@@ -129,11 +130,12 @@ ProgressBar.defaultProps = {
   state: "black",
   height: 2,
   progress: 0,
+  borderRadius: 4,
   animated: true,
   indeterminate: false,
   indeterminateDuration: 1100,
   progressDuration: 1100,
-  onCompletion: () => {}
+  onCompletion: () => {},
 };
 
 export default ProgressBar;
